@@ -1,20 +1,20 @@
 package main
 
-import "golang.org/x/tour/pic"
+import "fmt"
 
-func Pic(dx, dy int) [][]uint8 {
-	var slc [][]uint8
-	for i := 0; i < dy; i++ {
-		var slctwo []uint8
-		for j := 0; j < dx; j++ {
-			slctwo = append(slctwo, uint8(j^i))
-		}
-		slc = append(slc, slctwo)
-	}
+type IPAddr [4]byte
 
-	return slc
+// TODO: Add a "String() string" method to IPAddr.
+func (ip IPAddr) String() string {
+	return fmt.Sprintf("%v.%v.%v.%v", ip[0], ip[1], ip[2], ip[3])
 }
 
 func main() {
-	pic.Show(Pic)
+	hosts := map[string]IPAddr{
+		"loopback":  {127, 0, 0, 1},
+		"googleDNS": {8, 8, 8, 8},
+	}
+	for name, ip := range hosts {
+		fmt.Printf("%v: %v\n", name, ip)
+	}
 }
